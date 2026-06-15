@@ -1,0 +1,149 @@
+<div class="login-container" *ngIf="!usuario">
+
+  <h1>🛒 E-Commerce</h1>
+  <p>Sistema de gestión de productos e inventario</p>
+  <h2>Iniciar Sesión</h2>
+
+  <div>
+
+    <label>Correo</label>
+    <br>
+
+    <input type="email" placeholder="Ingrese su correo" [(ngModel)]="correo">
+
+    <br><br>
+
+    <label>Contraseña</label>
+    <br>
+
+    <input type="password" placeholder="Ingrese su contraseña" [(ngModel)]="password">
+
+    <br><br>
+
+    <button type="button" (click)="ingresar()">
+      Ingresar
+    </button>
+
+  </div>
+
+</div>
+
+<div *ngIf="usuario" class="dashboard">
+
+  <div class="encabezado">
+
+    <h1>Bienvenido</h1>
+
+    <button class="btn-logout" (click)="cerrarSesion()">
+      Cerrar Sesión
+    </button>
+
+  </div>
+
+  <p><strong>Nombre Usuario:</strong> {{ usuario.nombre }}</p>
+
+  <p *ngIf="usuario.rol == 'ADMIN'">
+    Administrador del sistema
+  </p>
+
+  <p *ngIf="usuario.rol == 'CLIENTE'">
+    Cliente registrado
+  </p>
+
+  <hr>
+
+  <h2>Productos</h2>
+
+  <br>
+
+  <input type="text" placeholder="Buscar producto" [(ngModel)]="textoBusqueda">
+
+  <br><br>
+
+  <table border="1" width="100%">
+
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Activo</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let producto of filtrarProductos()">
+
+        <td>{{ producto.id }}</td>
+
+        <td>{{ producto.nombre }}</td>
+
+        <td>{{ producto.descripcion }}</td>
+
+        <td>${{ producto.precio }}</td>
+
+        <td>{{ producto.activo }}</td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+  <hr>
+
+  <h2>🏆 Top 5 Productos Más Vendidos</h2>
+
+  <table border="1" width="100%">
+
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Cantidad Vendida</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let producto of topProductos">
+
+        <td>{{ producto[0] }}</td>
+
+        <td>{{ producto[1] }}</td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+  <hr>
+
+  <h2>👥 Top 5 Clientes Frecuentes</h2>
+
+  <table border="1" width="100%">
+
+    <thead>
+      <tr>
+        <th>Cliente</th>
+        <th>Cantidad de Órdenes</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let cliente of topClientes">
+
+        <td>{{ cliente[0] }}</td>
+
+        <td>{{ cliente[1] }}</td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>
